@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+	<class name="by.jd2.hib_ex01.bean.User" table="users">
+
+		<meta attribute="class-description">
+			This class contains the users detail.
+		</meta>
+		<id name="userId" type="int" column="user_id">
+			<generator class="native" />
+		</id>
+		<property name="firstName" column="first_name" type="string" />
+		<property name="lastName" column="last_name" type="string" />
+		<property name="email" column="email" type="string" />
+		<property name="password" column="password" type="string" />
+		<property name="passwordSalt" column="password_salt"
+			type="string" />
+		<property name="lastUpdate" column="last_update"
+			type="timestamp" />
+
+		<many-to-one name="userDetail" cascade="all"
+			class="by.jd2.hib_ex01.bean.UserDetail" column="fid_user_details" />
+
+	</class>
+</hibernate-mapping>
