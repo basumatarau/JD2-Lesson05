@@ -36,15 +36,16 @@ public class App {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/?useSSL=false", "root",
-				"password");
 
-		ScriptRunner runner = new ScriptRunner(con);
-		try {
-			runner.runScript(new FileReader("db-v2-init-script.sql"));
+		try (Connection conection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/?useSSL=false", "root",
+				"password")){
+			new ScriptRunner(conection).runScript(new FileReader("db-v2-init-script.sql"));
 		}catch (IOException e){
 			throw new RuntimeException(e);
 		}
+
+		Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/?useSSL=false", "root",
+				"password");
 
 		PreparedStatement psUsersDetails = con.prepareStatement(INSERT_USER_DATA_INTO_USER_DELATILS,
 				Statement.RETURN_GENERATED_KEYS);

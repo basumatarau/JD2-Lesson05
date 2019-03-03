@@ -28,7 +28,15 @@ public class Main {
 			Timestamp tb = new Timestamp(birthdayFormat.parse("02/02/2019").getTime());
 			
 			UserDetail userDetails = new UserDetail("Belarus", "Minsk", tb);
-			User user = new User("Bob", "Dou", "dou44@mail.com.by", "passwordstub", "saltstub", new Timestamp(System.currentTimeMillis()), userDetails);
+			User user = new User(
+					"Bob",
+					"Dou",
+					"dou44@mail.com.by",
+					"passwordstub",
+					"saltstub",
+					new Timestamp(System.currentTimeMillis()),
+					userDetails
+			);
 
 			session.save(user);
 			

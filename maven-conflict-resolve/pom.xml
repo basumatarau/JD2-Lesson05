@@ -30,12 +30,12 @@
 			<artifactId>maven_conflict1</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			
-			<!-- <exclusions>
+			<exclusions>
 				<exclusion>
 					<groupId>org.apache.commons</groupId>
 					<artifactId>commons-lang3</artifactId>
 				</exclusion>
-			</exclusions> -->
+			</exclusions>
 		</dependency>
 
 		<dependency>

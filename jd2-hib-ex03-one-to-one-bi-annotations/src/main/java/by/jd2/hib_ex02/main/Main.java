@@ -14,9 +14,9 @@ import by.jd2.hib_ex02.bean.UserDetail;
 public class Main {
 
 	public static void main(String[] args) throws ParseException {
-		//addUserAdnUserDetails();
+		addUserAdnUserDetails();
 		//retrieveUserAndUserDetails();
-		deleteUserAndUserDetails();
+		//deleteUserAndUserDetails();
 	}
 	
 

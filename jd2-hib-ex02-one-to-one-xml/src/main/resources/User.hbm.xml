@@ -9,9 +9,11 @@
 		<meta attribute="class-description">
 			This class contains the users detail.
 		</meta>
+
 		<id name="userId" type="int" column="user_id">
 			<generator class="native" />
 		</id>
+
 		<property name="firstName" column="first_name" type="string" />
 		<property name="lastName" column="last_name" type="string" />
 		<property name="email" column="email" type="string" />

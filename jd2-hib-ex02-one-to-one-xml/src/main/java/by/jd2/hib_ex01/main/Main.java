@@ -16,7 +16,7 @@ public class Main {
 	public static void main(String[] args) throws ParseException {
 
 		//addUserAdnUserDetails();
-		//retrieveUserAndUserDetails();
+		retrieveUserAndUserDetails();
 		deleteUserAndUserDetails();
 
 	}
@@ -34,8 +34,15 @@ public class Main {
 			Timestamp tb = new Timestamp(birthdayFormat.parse("03/03/2019").getTime());
 
 			UserDetail userDetails = new UserDetail("Belarus", "Minsk", tb);
-			User user = new User("Bob`", "Dou`", "dou55@mail.com.by", "passwordstub", "saltstub",
-					new Timestamp(System.currentTimeMillis()), userDetails);
+			User user = new User(
+					"Bob`",
+					"Dou`",
+					"dou55@mail.com.by",
+					"passwordstub",
+					"saltstub",
+					new Timestamp(System.currentTimeMillis()),
+					userDetails
+			);
 
 			session.save(user);
 
@@ -57,8 +64,8 @@ public class Main {
 		try {
 			session.beginTransaction();
 
-			int id = 4;
-			User user = session.get(User.class, 5);
+			int id = 1;
+			User user = session.get(User.class, id);
 
 			if (user != null) {
 				System.out.println(user.getEmail() + " - ");
@@ -80,7 +87,7 @@ public class Main {
 
 		session.beginTransaction();
 
-		int id = 4;
+		int id = 3;
 		User user = session.get(User.class, id);
 
 		if (user != null) {
