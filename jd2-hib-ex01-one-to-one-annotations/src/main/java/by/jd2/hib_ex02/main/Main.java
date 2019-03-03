@@ -22,10 +22,8 @@ public class Main {
 		Session session = factory.getCurrentSession();
 
 		try {
-
 			session.beginTransaction();
 
-		
 			SimpleDateFormat birthdayFormat = new SimpleDateFormat("dd/mm/yyyy");
 			Timestamp tb = new Timestamp(birthdayFormat.parse("02/02/2019").getTime());
 			

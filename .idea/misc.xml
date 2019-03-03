@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/db-v2-creation/pom.xml" />
+        <option value="$PROJECT_DIR$/jd2-hib-ex01-one-to-one-annotations/pom.xml" />
+        <option value="$PROJECT_DIR$/jd2-hib-ex02-one-to-one-xml/pom.xml" />
+        <option value="$PROJECT_DIR$/jd2-hib-ex03-one-to-one-bi-annotations/pom.xml" />
+        <option value="$PROJECT_DIR$/maven-conflict-resolve/pom.xml" />
+        <option value="$PROJECT_DIR$/maven-conflict2/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/jd2-hib-ex02-crud-annotations/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="10" project-jdk-type="JavaSDK" />
+</project>

@@ -3,13 +3,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>by.jd2.db_v1</groupId>
-	<artifactId>db_v1_creation</artifactId>
+	<groupId>by.htp.basumatarau</groupId>
+	<artifactId>db_v2_creation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>db-v1-creation</name>
+	<name>db-v2-creation</name>
 	<url>http://maven.apache.org</url>
+
+	<parent>
+		<groupId>by.htp.basumatarau</groupId>
+		<artifactId>jd2-lesson05</artifactId>
+		<version>0.0.1</version>
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,5 +33,11 @@
 			<artifactId>jbcrypt</artifactId>
 			<version>0.4</version>
 		</dependency>
+
+        <dependency>
+            <groupId>org.apache.ibatis</groupId>
+            <artifactId>ibatis-sqlmap</artifactId>
+            <version>3.0-beta-10</version>
+        </dependency>
 	</dependencies>
 </project>

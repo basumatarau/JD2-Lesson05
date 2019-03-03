@@ -1,5 +1,7 @@
 package by.jd2.db_v1;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,6 +12,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class App {
@@ -28,55 +31,70 @@ public class App {
 			{ "Netherlands Antilles", "Haag", "01/01/2019" }, { "United Arab Emirates", "Utrecht", "01/01/2019" },
 			{ "Argentina", "Eindhoven", "01/01/2019" }, { "Armenia", "Tilburg", "01/01/2019" }, };
 
-	private final static String INSERT_NEW_USER_INTO_USERS = "INSERT INTO users(first_name, last_name, email, password, password_salt, last_update, fid_user_details) VALUES(?,?,?,?,?,?,?)";
-	private final static String INSERT_USER_DATA_INTO_USER_DELATILS = "INSERT INTO user_details(country, city, birthday) VALUES(?,?,?)";
+	private final static String INSERT_NEW_USER_INTO_USERS = "INSERT INTO `db-v2`.users(first_name, last_name, email, password, password_salt, last_update, fid_user_details) VALUES(?,?,?,?,?,?,?)";
+	private final static String INSERT_USER_DATA_INTO_USER_DELATILS = "INSERT INTO `db-v2`.user_details(country, city, birthday) VALUES(?,?,?)";
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/jd2_hib_v2?useSSL=false", "root",
-				"123456");
+		Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/?useSSL=false", "root",
+				"password");
+
+		ScriptRunner runner = new ScriptRunner(con);
+		try {
+			runner.runScript(new FileReader("db-v2-init-script.sql"));
+		}catch (IOException e){
+			throw new RuntimeException(e);
+		}
 
 		PreparedStatement psUsersDetails = con.prepareStatement(INSERT_USER_DATA_INTO_USER_DELATILS,
 				Statement.RETURN_GENERATED_KEYS);
 		PreparedStatement psUsers = con.prepareStatement(INSERT_NEW_USER_INTO_USERS);
 
+		con.setAutoCommit(false);
+
 		for (int i = 0; i < 1; i++) {
+			try {
+				psUsersDetails.setString(2, data2[i][1]);
+				psUsersDetails.setString(1, data2[i][0]);
 
-			psUsersDetails.setString(2, data2[i][1]);
-			psUsersDetails.setString(1, data2[i][0]);
+				SimpleDateFormat birthdayFormat = new SimpleDateFormat("dd/mm/yyyy");
+				Timestamp tb = new Timestamp(birthdayFormat.parse(data2[i][2]).getTime());
 
-			SimpleDateFormat birthdayFormat = new SimpleDateFormat("dd/mm/yyyy");
-			Timestamp tb = new Timestamp(birthdayFormat.parse(data2[i][2]).getTime());
+				psUsersDetails.setTimestamp(3, tb);
 
-			psUsersDetails.setTimestamp(3, tb);
+				psUsersDetails.executeUpdate();
 
-			psUsersDetails.executeUpdate();
+				ResultSet autoKeyRS = psUsersDetails.getGeneratedKeys();
+				int autoKey;
 
-			ResultSet autoKeyRS = psUsersDetails.getGeneratedKeys();
-			int autoKey;
+				if (autoKeyRS.next()) {
+					autoKey = autoKeyRS.getInt(1);
+				} else {
+					throw new RuntimeException("no auto key");
+				}
 
-			if (autoKeyRS.next()) {
-				autoKey = autoKeyRS.getInt(1);
-			} else {
-				throw new RuntimeException("no auto key");
+				psUsers.setString(1, data[i][0]);// first_name
+				psUsers.setString(2, data[i][1]);// last_name
+				psUsers.setString(3, data[i][2]);// email
+
+				String salt = BCrypt.gensalt();
+				String hashpw = BCrypt.hashpw(data[i][3], salt);
+
+				psUsers.setString(4, hashpw);// password
+				psUsers.setString(5, salt);// password_salt
+
+				Timestamp t = new Timestamp(System.currentTimeMillis());
+				psUsers.setTimestamp(6, t);
+
+				psUsers.setInt(7, autoKey);
+
+				psUsers.executeUpdate();
+
+				con.commit();
+			}catch (SQLException e){
+				con.rollback();
+				throw new RuntimeException(e);
 			}
-
-			psUsers.setString(1, data[i][0]);// first_name
-			psUsers.setString(2, data[i][1]);// last_name
-			psUsers.setString(3, data[i][2]);// email
-
-			String salt = BCrypt.gensalt();
-			String hashpw = BCrypt.hashpw(data[i][3], salt);
-
-			psUsers.setString(4, hashpw);// password
-			psUsers.setString(5, salt);// password_salt
-
-			Timestamp t = new Timestamp(System.currentTimeMillis());
-			psUsers.setTimestamp(6, t);
-			
-			psUsers.setInt(7, autoKey);
-
-			psUsers.executeUpdate();
 
 			/*
 			 * System.out.print(data[i][0] + ", "); System.out.print(data[i][1] + ", ");

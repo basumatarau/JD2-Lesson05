@@ -2,17 +2,23 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>by.htp.hib_crud</groupId>
-  <artifactId>jd2-hib-ex02-crud-annotations</artifactId>
+  <groupId>by.htp.basumatarau</groupId>
+  <artifactId>jd2_hib_ex02_crud_xml_one_to_one</artifactId>
   <version>0.0.1</version>
   <packaging>jar</packaging>
 
-  <name>jd2-hib-crud-annotations</name>
+  <name>jd2-hib-ex02-crud-xml-one-to-one</name>
   <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+	<parent>
+		<groupId>by.htp.basumatarau</groupId>
+		<artifactId>jd2-lesson05</artifactId>
+		<version>0.0.1</version>
+	</parent>
 
   	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
